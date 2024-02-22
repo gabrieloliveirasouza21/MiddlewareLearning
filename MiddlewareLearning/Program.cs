@@ -1,22 +1,17 @@
+using MiddlewareLearning.CustomMiddleware;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddTransient<FirstCustomMiddleware>();
 var app = builder.Build();
 
+app.UseMiddleware<FirstCustomMiddleware>();
 
-//1° chamada
 app.Use(async (HttpContext context, RequestDelegate next) =>
 {
-    //lógica
+    await context.Response.WriteAsync("Chamada do meio");
     await next(context);
 });
 
-//2° chamada
-app.Use(async (HttpContext context, RequestDelegate next) =>
-{
-    //logica
-    await next(context);
-});
-
-//3° chamada
 app.Run(async (HttpContext context) =>
 {
     await context.Response.WriteAsync("Hello");
