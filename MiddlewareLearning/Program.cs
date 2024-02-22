@@ -4,7 +4,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<FirstCustomMiddleware>();
 var app = builder.Build();
 
-app.UseMiddleware<FirstCustomMiddleware>();
+//app.UseMiddleware<FirstCustomMiddleware>();
+app.UseCustomMiddleware();
+
 
 app.Use(async (HttpContext context, RequestDelegate next) =>
 {
